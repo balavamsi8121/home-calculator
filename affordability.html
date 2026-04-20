@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Affordability Calculator — HomeCalc</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500&family=DM+Sans:ital,wght@0,400;0,500;0,600&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700&family=Space+Grotesk:ital,wght@0,400;0,500;0,600;0,700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUarbnLuthimuoAAw7n6tqPbf5LD8FSkaGFqbnFvgvzStLJ7i5W" crossorigin="anonymous">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="light-theme">
+
+<canvas id="grain-canvas"></canvas>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">Home<span>Calc</span></a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Break-Even</a>
+      <a href="mortgage.html" class="nav-link">Mortgage</a>
+      <a href="affordability.html" class="nav-link">Affordability</a>
+      <a href="guide.html" class="nav-link">Buying Guide</a>
+    </div>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-mesh"><div class="hero-grid"></div></div>
+  <div class="hero-inner">
+    <h1>Home Affordability<br><span>Calculator</span></h1>
+    <p>Find out how much home you can comfortably afford based on your income, existing debts, and down payment. Three DTI scenarios — conservative, moderate, and aggressive — so you can choose the level of risk that fits your life.</p>
+  </div>
+  <div class="hero-bar">
+    <div class="hero-bar-inner">
+      <div class="hero-stat">
+        <div class="hero-stat-label">Conservative Max</div>
+        <div class="hero-stat-value" id="heroConservative">—</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-label">Moderate Max</div>
+        <div class="hero-stat-value good" id="heroModerate">—</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-label">Aggressive Max</div>
+        <div class="hero-stat-value" id="heroAggressive">—</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-label">Monthly Income</div>
+        <div class="hero-stat-value" id="heroIncome">—</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="container-lg">
+    <div class="row g-3 g-md-4">
+
+      <!-- LEFT: Inputs -->
+      <div class="col-lg-4">
+        <div class="card">
+          <div class="card-title">Your Finances</div>
+          <div class="card-sub">Enter your income, debts, and down payment to see how much home fits your budget across three lending scenarios.</div>
+
+          <div class="intro-block">
+            <h4>What is DTI?</h4>
+            <p><strong>Debt-to-Income (DTI)</strong> ratio is your total monthly debt payments divided by your gross monthly income. Lenders use it to measure how much new debt you can safely carry.</p>
+            <p>There are two DTI limits: <strong>front-end</strong> covers just the housing payment, and <strong>back-end</strong> covers housing plus all other debts. The tighter constraint is what determines your maximum.</p>
+          </div>
+
+          <div class="section-label">Income &amp; Debts</div>
+          <div class="input-grid">
+            <div class="field">
+              <label>Annual Gross Income ($)</label>
+              <input id="income" type="number" value="120000">
+              <div class="field-help">Pre-tax household income per year.</div>
+            </div>
+            <div class="field">
+              <label>Monthly Debts ($)</label>
+              <input id="debts" type="number" value="500">
+              <div class="field-help">Car loans, student loans, credit card minimums, etc.</div>
+            </div>
+            <div class="field">
+              <label>Down Payment ($)</label>
+              <input id="downPmt" type="number" value="60000">
+              <div class="field-help">Cash you can put toward the purchase.</div>
+            </div>
+          </div>
+
+          <div class="section-label">Loan Assumptions</div>
+          <div class="input-grid">
+            <div class="field">
+              <label>Interest Rate (%)</label>
+              <input id="rate" type="number" step="0.01" value="6.5">
+              <div class="field-help">Expected mortgage interest rate.</div>
+            </div>
+            <div class="field">
+              <label>Loan Term (yrs)</label>
+              <input id="term" type="number" value="30">
+              <div class="field-help">Typically 15 or 30 years.</div>
+            </div>
+            <div class="field">
+              <label>Property Tax (%/yr)</label>
+              <input id="taxRate" type="number" step="0.01" value="1.2">
+              <div class="field-help">Annual property tax as % of home price.</div>
+            </div>
+            <div class="field">
+              <label>Home Insurance ($/yr)</label>
+              <input id="insurance" type="number" value="2400">
+              <div class="field-help">Annual homeowners insurance cost.</div>
+            </div>
+            <div class="field">
+              <label>HOA ($/mo)</label>
+              <input id="hoa" type="number" value="0">
+              <div class="field-help">Monthly HOA fees, if applicable.</div>
+            </div>
+          </div>
+
+          <div class="toolbar">
+            <button id="calcBtn" class="btn-primary" type="button">↻ Recalculate</button>
+            <button id="resetBtn" class="btn-secondary" type="button">Reset defaults</button>
+          </div>
+
+          <div class="how-block">
+            <h4>The three scenarios</h4>
+            <ul>
+              <li><strong>Conservative</strong> follows the traditional 28/36 rule — widely recommended for first-time buyers with limited cash reserves.</li>
+              <li><strong>Moderate</strong> uses FHA guidelines (31/43) — the most common approval threshold in today's market.</li>
+              <li><strong>Aggressive</strong> reflects the maximum most lenders will approve (36/50) — leaves little financial cushion.</li>
+              <li><strong>Max Home Price</strong> is the purchase price your down payment and maximum loan can cover together.</li>
+            </ul>
+          </div>
+
+          <div class="fix-notice">
+            <strong>Important:</strong> Lender approval is not guaranteed at any DTI. Credit score, employment history, reserves, and other factors all affect eligibility. These numbers are estimates only.
+          </div>
+        </div>
+      </div>
+
+      <!-- RIGHT: Output -->
+      <div class="col-lg-8">
+        <div class="metrics">
+          <div class="metric">
+            <div class="k">Conservative Max Price</div>
+            <div class="v" id="metConservative">—</div>
+            <div class="hint">28% / 36% DTI</div>
+          </div>
+          <div class="metric">
+            <div class="k">Moderate Max Price</div>
+            <div class="v good" id="metModerate">—</div>
+            <div class="hint">31% / 43% DTI — FHA guideline</div>
+          </div>
+          <div class="metric">
+            <div class="k">Aggressive Max Price</div>
+            <div class="v bad" id="metAggressive">—</div>
+            <div class="hint">36% / 50% DTI — lender max</div>
+          </div>
+          <div class="metric">
+            <div class="k">Your Monthly Income</div>
+            <div class="v" id="metIncome">—</div>
+            <div class="hint">Gross (pre-tax) per month</div>
+          </div>
+        </div>
+
+        <!-- Scenario comparison table -->
+        <div class="card table-card" style="margin-bottom: 16px;">
+          <div class="table-head">
+            <div>
+              <div class="card-title">Scenario Comparison</div>
+              <div class="card-sub">How much home, loan, and payment each DTI scenario allows.</div>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="table-afford">
+              <thead>
+                <tr>
+                  <th>Scenario</th>
+                  <th>Front / Back DTI</th>
+                  <th>Max PITI</th>
+                  <th class="col-group-cost">P&amp;I Payment</th>
+                  <th>Max Loan</th>
+                  <th class="col-group-gain">Max Home Price</th>
+                </tr>
+              </thead>
+              <tbody id="scenarioBody"></tbody>
+            </table>
+          </div>
+          <div class="legend">
+            <strong>PITI</strong> = Principal + Interest + Taxes + Insurance (+ HOA). Max Loan is derived from the maximum PITI after subtracting fixed monthly costs. Max Home Price = Max Loan + Down Payment.
+          </div>
+        </div>
+
+        <!-- Payment breakdown -->
+        <div class="card">
+          <div class="card-title">Monthly Payment Breakdown <span style="font-size:11px;font-weight:500;color:var(--text-3);letter-spacing:0;font-family:'DM Sans',sans-serif;">(Moderate scenario)</span></div>
+          <div class="card-sub" style="margin-bottom:14px;">Where your monthly housing dollar goes under the moderate scenario.</div>
+          <div class="breakdown-rows" id="breakdownRows">
+            <div class="breakdown-row">
+              <span class="breakdown-label">Principal &amp; Interest</span>
+              <span class="breakdown-val" id="bdPI">—</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="breakdown-label">Property Tax</span>
+              <span class="breakdown-val" id="bdTax">—</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="breakdown-label">Home Insurance</span>
+              <span class="breakdown-val" id="bdIns">—</span>
+            </div>
+            <div class="breakdown-row">
+              <span class="breakdown-label">HOA</span>
+              <span class="breakdown-val" id="bdHOA">—</span>
+            </div>
+            <div class="breakdown-row total-row">
+              <span class="breakdown-label">Total Monthly PITI</span>
+              <span class="breakdown-val" id="bdTotal">—</span>
+            </div>
+          </div>
+          <div style="margin-top:16px;" class="guide-block">
+            <h4>Income-to-payment ratio</h4>
+            <div class="guide-grid">
+              <div class="guide-item"><strong>Front-End DTI:</strong> Housing PITI ÷ gross monthly income. Lenders prefer this under 31%.</div>
+              <div class="guide-item"><strong>Back-End DTI:</strong> (PITI + all debts) ÷ gross income. Most lenders cap this at 43–50%.</div>
+              <div class="guide-item"><strong>Your Front-End (mod.):</strong> <span id="dtiFront" style="font-family:'DM Mono',monospace;color:var(--text)">—</span></div>
+              <div class="guide-item"><strong>Your Back-End (mod.):</strong> <span id="dtiBack" style="font-family:'DM Mono',monospace;color:var(--text)">—</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  Planning tools only — not financial, tax, or legal advice. Consult a licensed professional before making real estate decisions.<br>
+  <a href="index.html">Break-Even</a> · <a href="mortgage.html">Mortgage</a> · <a href="affordability.html">Affordability</a> · <a href="guide.html">Buying Guide</a>
+</footer>
+
+<script>
+(function(){
+  var c = document.getElementById('grain-canvas');
+  var ctx = c.getContext('2d');
+  function resize(){ c.width = window.innerWidth; c.height = window.innerHeight; }
+  function draw(){
+    var w=c.width, h=c.height, img=ctx.createImageData(w,h), d=img.data;
+    for(var i=0;i<d.length;i+=4){ var v=Math.random()*255|0; d[i]=d[i+1]=d[i+2]=v; d[i+3]=255; }
+    ctx.putImageData(img,0,0);
+  }
+  resize(); draw();
+  window.addEventListener('resize', function(){ resize(); draw(); });
+})();
+</script>
+
+<script>
+(function(){
+  function num(id){ return parseFloat(document.getElementById(id).value || '0') || 0; }
+  function money(n){ return new Intl.NumberFormat('en-US',{style:'currency',currency:'USD',maximumFractionDigits:0}).format(n); }
+  function pct(n){ return n.toFixed(1) + '%'; }
+
+  function pmt(loan, annualRate, years){
+    var r = annualRate/100/12, n = years*12;
+    if(loan <= 0 || n <= 0) return 0;
+    if(r === 0) return loan/n;
+    return loan * (r * Math.pow(1+r,n)) / (Math.pow(1+r,n) - 1);
+  }
+
+  function maxLoanFromPI(maxPI, rate, years){
+    var r = rate/100/12, n = years*12;
+    if(maxPI <= 0) return 0;
+    if(r === 0) return maxPI * n;
+    return maxPI * (Math.pow(1+r,n) - 1) / (r * Math.pow(1+r,n));
+  }
+
+  function calcScenario(monthlyIncome, monthlyDebts, down, rate, years, taxRate, annualIns, monthlyHOA, frontDTI, backDTI){
+    var maxPITI_front = monthlyIncome * frontDTI;
+    var maxPITI_back  = monthlyIncome * backDTI - monthlyDebts;
+    var maxPITI = Math.max(0, Math.min(maxPITI_front, maxPITI_back));
+
+    var monthlyIns = annualIns / 12;
+
+    // Iterative solve: home price affects tax, which affects max PI
+    var homePrice = 300000;
+    for(var i = 0; i < 12; i++){
+      var monthlyTax = homePrice * (taxRate/100) / 12;
+      var maxPI = maxPITI - monthlyTax - monthlyIns - monthlyHOA;
+      var loan  = Math.max(0, maxLoanFromPI(maxPI, rate, years));
+      homePrice = loan + down;
+    }
+
+    var loan        = Math.max(0, homePrice - down);
+    var monthlyTax  = homePrice * (taxRate/100) / 12;
+    var maxPI       = Math.max(0, maxPITI - monthlyTax - monthlyIns - monthlyHOA);
+    var actualPI    = pmt(loan, rate, years);
+    var actualPITI  = actualPI + monthlyTax + monthlyIns + monthlyHOA;
+    var actualFront = monthlyIncome > 0 ? actualPITI / monthlyIncome : 0;
+    var actualBack  = monthlyIncome > 0 ? (actualPITI + monthlyDebts) / monthlyIncome : 0;
+
+    return {
+      maxPITI:   maxPITI,
+      maxPI:     actualPI,
+      maxLoan:   loan,
+      homePrice: Math.max(0, homePrice),
+      monthlyTax:monthlyTax,
+      monthlyIns:monthlyIns,
+      monthlyHOA:monthlyHOA,
+      dtiF:      actualFront,
+      dtiB:      actualBack
+    };
+  }
+
+  function calculate(){
+    var income    = num('income');
+    var debts     = num('debts');
+    var down      = num('downPmt');
+    var rate      = num('rate');
+    var years     = num('term');
+    var taxRate   = num('taxRate');
+    var ins       = num('insurance');
+    var hoaM      = num('hoa');
+
+    var monthlyIncome = income / 12;
+    document.getElementById('heroIncome').textContent  = money(monthlyIncome);
+    document.getElementById('metIncome').textContent   = money(monthlyIncome);
+
+    var scenarios = [
+      { key: 'conservative', label: 'Conservative', frontDTI: 0.28, backDTI: 0.36, badgeClass: 'badge-conservative' },
+      { key: 'moderate',     label: 'Moderate',     frontDTI: 0.31, backDTI: 0.43, badgeClass: 'badge-moderate'     },
+      { key: 'aggressive',   label: 'Aggressive',   frontDTI: 0.36, backDTI: 0.50, badgeClass: 'badge-aggressive'   }
+    ];
+
+    var results = scenarios.map(function(s){
+      return Object.assign({}, s, calcScenario(monthlyIncome, debts, down, rate, years, taxRate, ins, hoaM, s.frontDTI, s.backDTI));
+    });
+
+    // Hero bar
+    document.getElementById('heroConservative').textContent = money(results[0].homePrice);
+    document.getElementById('heroModerate').textContent     = money(results[1].homePrice);
+    document.getElementById('heroAggressive').textContent   = money(results[2].homePrice);
+
+    // Metric cards
+    document.getElementById('metConservative').textContent = money(results[0].homePrice);
+    document.getElementById('metModerate').textContent     = money(results[1].homePrice);
+    document.getElementById('metAggressive').textContent   = money(results[2].homePrice);
+
+    // Scenario table
+    var body = document.getElementById('scenarioBody');
+    body.innerHTML = '';
+    results.forEach(function(r, idx){
+      var tr = document.createElement('tr');
+      tr.style.animationDelay = (idx * 40) + 'ms';
+      tr.innerHTML =
+        '<td><div class="year-cell" style="gap:8px"><div class="year-dot"></div>' +
+          '<span class="badge-pill ' + r.badgeClass + '">' + r.label + '</span>' +
+        '</div></td>' +
+        '<td style="font-family:\'DM Mono\',monospace;font-size:12.5px;color:var(--text-2)">' +
+          (r.frontDTI*100).toFixed(0) + '% / ' + (r.backDTI*100).toFixed(0) + '%' +
+        '</td>' +
+        '<td class="col-neutral">' + money(r.maxPITI)   + '/mo</td>' +
+        '<td class="col-cost">'    + money(r.maxPI)      + '/mo</td>' +
+        '<td class="col-neutral">' + money(r.maxLoan)    + '</td>' +
+        '<td class="col-gain" style="font-weight:700">' + money(r.homePrice) + '</td>';
+      body.appendChild(tr);
+    });
+
+    // Payment breakdown (moderate)
+    var mod = results[1];
+    document.getElementById('bdPI').textContent    = money(mod.maxPI)    + '/mo';
+    document.getElementById('bdTax').textContent   = money(mod.monthlyTax) + '/mo';
+    document.getElementById('bdIns').textContent   = money(mod.monthlyIns) + '/mo';
+    document.getElementById('bdHOA').textContent   = money(mod.monthlyHOA) + '/mo';
+    document.getElementById('bdTotal').textContent = money(mod.maxPITI)  + '/mo';
+    document.getElementById('dtiFront').textContent = pct(mod.dtiF * 100);
+    document.getElementById('dtiBack').textContent  = pct(mod.dtiB  * 100);
+  }
+
+  function resetDefaults(){
+    document.getElementById('income').value    = 120000;
+    document.getElementById('debts').value     = 500;
+    document.getElementById('downPmt').value   = 60000;
+    document.getElementById('rate').value      = 6.5;
+    document.getElementById('term').value      = 30;
+    document.getElementById('taxRate').value   = 1.2;
+    document.getElementById('insurance').value = 2400;
+    document.getElementById('hoa').value       = 0;
+    calculate();
+  }
+
+  document.getElementById('calcBtn').addEventListener('click', calculate);
+  document.getElementById('resetBtn').addEventListener('click', resetDefaults);
+  document.querySelectorAll('input').forEach(function(el){
+    el.addEventListener('input', calculate);
+    el.addEventListener('change', calculate);
+  });
+  resetDefaults();
+})();
+</script>
+
+<script>
+(function(){
+  var p = location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-link').forEach(function(a){
+    if(a.getAttribute('href') === p) a.classList.add('active');
+  });
+})();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWbSxccPQtF3EpF3fnJHog6LaEVF6d1uPVst4IipKGbAIZ7eP" crossorigin="anonymous"></script>
+</body>
+</html>

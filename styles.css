@@ -783,3 +783,455 @@ tbody tr { animation: fadeIn 0.2s both; }
   from { opacity: 0; }
   to   { opacity: 1; }
 }
+
+/* ── Site Navigation ── */
+.site-nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(13, 21, 32, 0.97);
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.nav-inner {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  height: 52px;
+  gap: 32px;
+}
+
+.nav-brand {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #EEF2FF;
+  text-decoration: none;
+  letter-spacing: -0.2px;
+  flex-shrink: 0;
+}
+
+.nav-brand span { color: #93C5FD; }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.nav-links::-webkit-scrollbar { display: none; }
+
+.nav-link {
+  font-size: 12.5px;
+  font-weight: 500;
+  color: rgba(180, 200, 235, 0.65);
+  text-decoration: none;
+  padding: 6px 12px;
+  border-radius: var(--radius-xs);
+  white-space: nowrap;
+  transition: color 0.15s, background 0.15s;
+}
+
+.nav-link:hover {
+  color: #EEF2FF;
+  background: rgba(255,255,255,0.07);
+}
+
+.nav-link.active {
+  color: #93C5FD;
+  background: rgba(37, 99, 235, 0.14);
+  font-weight: 600;
+}
+
+/* ── Site Footer ── */
+.site-footer {
+  background: #0D1520;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding: 22px 28px;
+  text-align: center;
+  color: rgba(180, 200, 235, 0.35);
+  font-size: 11.5px;
+  line-height: 1.8;
+}
+
+.site-footer a {
+  color: rgba(180, 200, 235, 0.55);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.site-footer a:hover { color: #93C5FD; }
+
+/* ── Narrower table overrides for amort/affordability ── */
+table.table-amort  { min-width: 860px; }
+table.table-afford { min-width: 680px; }
+
+/* ── Equity progress bar ── */
+.eq-bar-track {
+  height: 5px;
+  background: rgba(0,0,0,0.08);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.eq-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--accent-hover));
+  border-radius: 3px;
+  transition: width 0.4s ease;
+  min-width: 2px;
+}
+
+/* ── Scenario badges ── */
+.badge-pill {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  padding: 3px 8px;
+  border-radius: 20px;
+}
+
+.badge-conservative {
+  background: rgba(21, 128, 61, 0.10);
+  color: #15803D;
+  border: 1px solid rgba(21, 128, 61, 0.20);
+}
+
+.badge-moderate {
+  background: rgba(30, 58, 110, 0.10);
+  color: #1E3A6E;
+  border: 1px solid rgba(30, 58, 110, 0.22);
+}
+
+.badge-aggressive {
+  background: rgba(220, 38, 38, 0.08);
+  color: #DC2626;
+  border: 1px solid rgba(220, 38, 38, 0.18);
+}
+
+/* ── Payment breakdown card ── */
+.breakdown-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.breakdown-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 9px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 13px;
+}
+
+.breakdown-row:last-child { border-bottom: none; }
+
+.breakdown-label { color: var(--text-2); font-size: 12.5px; }
+
+.breakdown-val {
+  font-family: 'DM Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.breakdown-row.total-row .breakdown-label {
+  font-weight: 700;
+  color: var(--text);
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.breakdown-row.total-row .breakdown-val {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--accent);
+}
+
+/* ── Guide page: Step list ── */
+.step-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.step-item {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 13px 15px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+}
+
+.step-item:hover {
+  border-color: var(--border-strong);
+  transform: translateX(3px);
+  box-shadow: var(--shadow-md);
+}
+
+.step-num {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: #93C5FD;
+  background: rgba(37, 99, 235, 0.09);
+  border: 1px solid rgba(37, 99, 235, 0.16);
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.step-body h4 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 3px;
+}
+
+.step-body p {
+  font-size: 11.5px;
+  color: var(--text-2);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── Guide page: Glossary ── */
+.glossary-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.glossary-item {
+  padding: 11px 13px;
+  background: #FAFAFA;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.glossary-item:hover {
+  border-color: var(--border-strong);
+  background: var(--surface);
+}
+
+.glossary-term {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 3px;
+}
+
+.glossary-def {
+  font-size: 11.5px;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+
+/* ── Guide page: Stat tiles ── */
+.stat-tiles {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.stat-tile {
+  padding: 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+  transition: transform 0.18s, box-shadow 0.18s;
+}
+
+.stat-tile:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.stat-tile-val {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--accent-hover);
+  line-height: 1.1;
+  margin-bottom: 4px;
+}
+
+.stat-tile-label {
+  font-size: 9.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.09em;
+  color: var(--text-3);
+  margin-bottom: 4px;
+}
+
+.stat-tile-desc {
+  font-size: 11px;
+  color: var(--text-2);
+  line-height: 1.5;
+}
+
+/* ── Guide page: Resource cards ── */
+.resource-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.resource-card {
+  padding: 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+}
+
+.resource-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-strong);
+}
+
+.resource-card a { text-decoration: none; color: inherit; display: block; }
+
+.resource-name {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent-hover);
+  margin-bottom: 5px;
+  transition: color 0.15s;
+}
+
+.resource-card:hover .resource-name { color: var(--accent); }
+
+.resource-desc {
+  font-size: 11.5px;
+  color: var(--text-2);
+  line-height: 1.6;
+}
+
+.resource-tag {
+  display: inline-block;
+  margin-top: 8px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-3);
+  background: var(--surface-2);
+  border-radius: 4px;
+  padding: 2px 7px;
+}
+
+/* ── Guide page: Tips / Mistakes list ── */
+.tips-list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tips-list li {
+  display: flex;
+  gap: 10px;
+  padding: 10px 12px;
+  background: #FAFAFA;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  color: var(--text-2);
+  line-height: 1.6;
+  transition: border-color 0.15s, background 0.15s;
+}
+
+.tips-list li:hover {
+  border-color: var(--border-strong);
+  background: var(--surface);
+}
+
+.tips-list li strong { color: var(--text); font-weight: 600; }
+
+.tip-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 6px;
+}
+
+.tip-dot-green { background: var(--good); }
+.tip-dot-red   { background: var(--bad); }
+
+/* ── Guide page: Calculator CTA cards ── */
+.cta-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.cta-card {
+  padding: 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  transition: transform 0.18s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.18s, border-color 0.18s;
+}
+
+.cta-card:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--border-strong);
+}
+
+.cta-card-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--accent-hover);
+  margin-bottom: 6px;
+}
+
+.cta-card-desc {
+  font-size: 11.5px;
+  color: var(--text-2);
+  line-height: 1.55;
+}
+
+/* ── Responsive additions ── */
+@media (max-width: 767px) {
+  .nav-inner          { padding: 0 16px; gap: 16px; }
+  .glossary-grid      { grid-template-columns: 1fr; }
+  .resource-grid      { grid-template-columns: 1fr; }
+  .stat-tiles         { grid-template-columns: 1fr 1fr; }
+  .cta-grid           { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 575px) {
+  .stat-tiles { grid-template-columns: 1fr 1fr; }
+  .site-footer { padding: 18px 16px; }
+}
