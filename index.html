@@ -12,8 +12,21 @@
 </head>
 <body class="light-theme">
 
-<!-- -- Hero -- -->
+<!-- -- Nav -- -->
 <canvas id="grain-canvas" width="1104" height="789"></canvas>
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">Home<span>Calc</span></a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Break-Even</a>
+      <a href="mortgage.html" class="nav-link">Mortgage</a>
+      <a href="affordability.html" class="nav-link">Affordability</a>
+      <a href="guide.html" class="nav-link">Buying Guide</a>
+    </div>
+  </div>
+</nav>
+
+<!-- -- Hero -- -->
 <div class="hero">
   <div class="hero-mesh">
     <div class="hero-grid"></div>
@@ -205,7 +218,10 @@
 </div>
 </div>
 
-
+<footer class="site-footer">
+  Planning tools only — not financial, tax, or legal advice. Consult a licensed professional before making real estate decisions.<br>
+  <a href="index.html">Break-Even</a> · <a href="mortgage.html">Mortgage</a> · <a href="affordability.html">Affordability</a> · <a href="guide.html">Buying Guide</a>
+</footer>
 
 <script>
 (function(){
@@ -417,6 +433,15 @@ window.addEventListener('message', function(e) {
     el.addEventListener("change", calculate);
   });
   resetDefaults();
+})();
+</script>
+
+<script>
+(function(){
+  var p = location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-link').forEach(function(a){
+    if(a.getAttribute('href') === p) a.classList.add('active');
+  });
 })();
 </script>
 

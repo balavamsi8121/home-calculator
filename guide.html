@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>First-Time Buyer Guide — HomeCalc</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500&family=DM+Sans:ital,wght@0,400;0,500;0,600&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700&family=Space+Grotesk:ital,wght@0,400;0,500;0,600;0,700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUarbnLuthimuoAAw7n6tqPbf5LD8FSkaGFqbnFvgvzStLJ7i5W" crossorigin="anonymous">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="light-theme">
+
+<canvas id="grain-canvas"></canvas>
+
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">Home<span>Calc</span></a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Break-Even</a>
+      <a href="mortgage.html" class="nav-link">Mortgage</a>
+      <a href="affordability.html" class="nav-link">Affordability</a>
+      <a href="guide.html" class="nav-link">Buying Guide</a>
+    </div>
+  </div>
+</nav>
+
+<div class="hero">
+  <div class="hero-mesh"><div class="hero-grid"></div></div>
+  <div class="hero-inner">
+    <h1>First-Time Home<br><span>Buyer Guide</span></h1>
+    <p>A practical, no-fluff walkthrough of the home buying process — from checking your credit score to getting the keys. Key terms explained, common mistakes flagged, and the numbers that matter most.</p>
+  </div>
+</div>
+
+<div class="wrap">
+  <div class="container-lg">
+    <div class="row g-3 g-md-4">
+
+      <!-- Row 1: Process + Key Numbers -->
+      <div class="col-lg-7">
+        <div class="card" style="height:100%">
+          <div class="card-title">The 10-Step Buying Process</div>
+          <div class="card-sub" style="margin-bottom:16px">From first glance at listings to handing over the keys — here's what to expect at every stage.</div>
+          <div class="step-list">
+            <div class="step-item">
+              <div class="step-num">1</div>
+              <div class="step-body">
+                <h4>Check Your Credit &amp; Finances</h4>
+                <p>Pull your credit report, check your score, and resolve any errors before applying. Most conventional loans require a 620+ score; the best rates start at 740+.</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">2</div>
+              <div class="step-body">
+                <h4>Set a Realistic Budget</h4>
+                <p>Use the 28/36 DTI rule as a ceiling, not a target. Factor in property taxes, insurance, maintenance (budget 1% of home value per year), and HOA fees.</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">3</div>
+              <div class="step-body">
+                <h4>Save for Down Payment &amp; Closing Costs</h4>
+                <p>Aim for 20% down to avoid PMI. On top of that, budget 2–5% for closing costs — origination fees, title insurance, appraisal, and prepaid items.</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">4</div>
+              <div class="step-body">
+                <h4>Get Pre-Approved for a Mortgage</h4>
+                <p>A lender reviews your income, assets, and credit, then issues a pre-approval letter. This tells sellers you're serious and shows exactly how much you can borrow.</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">5</div>
+              <div class="step-body">
+                <h4>Find a Buyer's Real Estate Agent</h4>
+                <p>A good buyer's agent represents your interests, knows the local market, and is typically compensated by the seller — so this usually costs you nothing.</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">6</div>
+              <div class="step-body">
+                <h4>Search for Homes</h4>
+                <p>Define your must-haves vs. nice-to-haves before touring. Visit at different times of day. Research school districts, flood zones, and future development plans.</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">7</div>
+              <div class="step-body">
+                <h4>Make an Offer</h4>
+                <p>Your agent drafts a purchase offer with a price, contingencies (inspection, financing, appraisal), and earnest money deposit (typically 1–3% of purchase price).</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">8</div>
+              <div class="step-body">
+                <h4>Schedule a Home Inspection</h4>
+                <p>Hire a licensed inspector to examine the structure, roof, systems, and appliances. Use findings to negotiate repairs or a price reduction — never skip this step.</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">9</div>
+              <div class="step-body">
+                <h4>Secure Final Mortgage Approval</h4>
+                <p>Your lender's underwriter verifies all your documents and issues a final "clear to close." Avoid major purchases, new credit, or job changes during this period.</p>
+              </div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">10</div>
+              <div class="step-body">
+                <h4>Close on Your Home</h4>
+                <p>Sign the closing documents, pay your down payment and closing costs, and receive the keys. The title officially transfers — you're a homeowner.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-5">
+        <div class="card">
+          <div class="card-title">Key Numbers to Know</div>
+          <div class="card-sub" style="margin-bottom:16px">The benchmarks that guide every lender decision and buyer strategy.</div>
+          <div class="stat-tiles">
+            <div class="stat-tile">
+              <div class="stat-tile-val">20%</div>
+              <div class="stat-tile-label">Ideal Down Payment</div>
+              <div class="stat-tile-desc">Avoids PMI and keeps monthly payments lower.</div>
+            </div>
+            <div class="stat-tile">
+              <div class="stat-tile-val">28/36</div>
+              <div class="stat-tile-label">Conservative DTI Rule</div>
+              <div class="stat-tile-desc">Front-end / back-end debt-to-income limits.</div>
+            </div>
+            <div class="stat-tile">
+              <div class="stat-tile-val">620+</div>
+              <div class="stat-tile-label">Min Credit Score</div>
+              <div class="stat-tile-desc">For most conventional loans. Best rates at 740+.</div>
+            </div>
+            <div class="stat-tile">
+              <div class="stat-tile-val">2–5%</div>
+              <div class="stat-tile-label">Closing Costs</div>
+              <div class="stat-tile-desc">Percentage of purchase price due at settlement.</div>
+            </div>
+            <div class="stat-tile">
+              <div class="stat-tile-val">1%</div>
+              <div class="stat-tile-label">Annual Maintenance</div>
+              <div class="stat-tile-desc">Rule-of-thumb budget for repairs and upkeep.</div>
+            </div>
+            <div class="stat-tile">
+              <div class="stat-tile-val">3–6 mo</div>
+              <div class="stat-tile-label">Emergency Fund</div>
+              <div class="stat-tile-desc">Keep liquid savings after closing for surprises.</div>
+            </div>
+            <div class="stat-tile">
+              <div class="stat-tile-val">3.5%</div>
+              <div class="stat-tile-label">FHA Min Down</div>
+              <div class="stat-tile-desc">FHA loans allow lower down payments (score 580+).</div>
+            </div>
+            <div class="stat-tile">
+              <div class="stat-tile-val">5 yrs</div>
+              <div class="stat-tile-label">Typical Horizon</div>
+              <div class="stat-tile-desc">Stay at least 5 years for buying to often make sense.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 2: Glossary -->
+      <div class="col-12">
+        <div class="card">
+          <div class="card-title">Key Terms Glossary</div>
+          <div class="card-sub" style="margin-bottom:16px">The words every buyer needs to understand before signing anything.</div>
+          <div class="glossary-grid">
+            <div class="glossary-item">
+              <div class="glossary-term">APR (Annual Percentage Rate)</div>
+              <div class="glossary-def">The true yearly cost of borrowing, including interest and fees. Always compare APR — not just interest rate — when shopping lenders.</div>
+            </div>
+            <div class="glossary-item">
+              <div class="glossary-term">DTI (Debt-to-Income Ratio)</div>
+              <div class="glossary-def">Monthly debt obligations divided by gross monthly income. Front-end covers housing only; back-end includes all debts.</div>
+            </div>
+            <div class="glossary-item">
+              <div class="glossary-term">LTV (Loan-to-Value)</div>
+              <div class="glossary-def">Loan amount divided by the appraised value. LTV above 80% usually triggers PMI. Lower LTV = lower risk for lenders = better rates.</div>
+            </div>
+            <div class="glossary-item">
+              <div class="glossary-term">PMI (Private Mortgage Insurance)</div>
+              <div class="glossary-def">Monthly premium required when your down payment is under 20%. Protects the lender, not you. Typically 0.5–1.5% of the loan per year.</div>
+            </div>
+            <div class="glossary-item">
+              <div class="glossary-term">Escrow</div>
+              <div class="glossary-def">A third-party account that holds funds for taxes and insurance, collected monthly as part of your mortgage payment and disbursed when bills are due.</div>
+            </div>
+            <div class="glossary-item">
+              <div class="glossary-term">Closing Costs</div>
+              <div class="glossary-def">Fees paid at settlement: loan origination, appraisal, title search, title insurance, prepaid interest, and more. Budget 2–5% of purchase price.</div>
+            </div>
+            <div class="glossary-item">
+              <div class="glossary-term">Earnest Money</div>
+              <div class="glossary-def">A good-faith deposit (1–3% of purchase price) submitted with your offer. Applied to your down payment at closing or forfeited if you back out without cause.</div>
+            </div>
+            <div class="glossary-item">
+              <div class="glossary-term">Pre-Approval vs Pre-Qualification</div>
+              <div class="glossary-def">Pre-qualification is a quick estimate. Pre-approval involves verified income and credit — it's a much stronger signal to sellers that you can close.</div>
+            </div>
+            <div class="glossary-item">
+              <div class="glossary-term">Contingency</div>
+              <div class="glossary-def">A condition in the purchase contract that must be satisfied to proceed. Common contingencies: home inspection, financing approval, appraisal value.</div>
+            </div>
+            <div class="glossary-item">
+              <div class="glossary-term">Title Insurance</div>
+              <div class="glossary-def">Protects against ownership disputes, outstanding liens, or errors in public records that could threaten your ownership after purchase.</div>
+            </div>
+            <div class="glossary-item">
+              <div class="glossary-term">Appraisal</div>
+              <div class="glossary-def">An independent valuation of the home, ordered by the lender. If the appraised value comes in below the purchase price, you may need to renegotiate.</div>
+            </div>
+            <div class="glossary-item">
+              <div class="glossary-term">Amortization</div>
+              <div class="glossary-def">The gradual payoff of a loan through regular payments. Early payments are mostly interest; later payments shift toward principal as the balance falls.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 3: Tips + Mistakes -->
+      <div class="col-lg-6">
+        <div class="card" style="height:100%">
+          <div class="card-title">First-Time Buyer Tips</div>
+          <div class="card-sub" style="margin-bottom:14px">Advice that saves money and avoids regret.</div>
+          <ul class="tips-list">
+            <li>
+              <div class="tip-dot tip-dot-green"></div>
+              <span><strong>Don't buy to the max the bank approves.</strong> Lenders assess risk, not lifestyle. Build in breathing room for job changes, repairs, or family shifts.</span>
+            </li>
+            <li>
+              <div class="tip-dot tip-dot-green"></div>
+              <span><strong>Get pre-approved before house hunting.</strong> It anchors your search, speeds up offers, and signals seriousness to sellers in competitive markets.</span>
+            </li>
+            <li>
+              <div class="tip-dot tip-dot-green"></div>
+              <span><strong>Shop at least 3 lenders.</strong> Even a 0.25% rate difference on a $500k loan saves over $25,000 in interest across 30 years.</span>
+            </li>
+            <li>
+              <div class="tip-dot tip-dot-green"></div>
+              <span><strong>Factor in all costs before deciding.</strong> Property taxes, insurance, maintenance, utilities, and HOA can add $1,500–$3,000+ per month beyond the mortgage.</span>
+            </li>
+            <li>
+              <div class="tip-dot tip-dot-green"></div>
+              <span><strong>Lock your rate when you have a contract.</strong> Rate lock periods typically run 30–60 days. Monitor rates and lock when favorable after your offer is accepted.</span>
+            </li>
+            <li>
+              <div class="tip-dot tip-dot-green"></div>
+              <span><strong>Visit the neighborhood at different times.</strong> Morning, evening, and weekend visits reveal traffic, noise, and neighbor patterns you won't see during a daytime open house.</span>
+            </li>
+            <li>
+              <div class="tip-dot tip-dot-green"></div>
+              <span><strong>Look past cosmetics.</strong> Ugly paint, outdated fixtures, and bad carpeting are cheap to fix. Foundation issues, roof problems, and water damage are not.</span>
+            </li>
+            <li>
+              <div class="tip-dot tip-dot-green"></div>
+              <span><strong>Think about resale even before you buy.</strong> Location, school district, lot orientation, and floor plan flexibility affect your future buyer pool more than interior finishes.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="card" style="height:100%">
+          <div class="card-title">Common Mistakes to Avoid</div>
+          <div class="card-sub" style="margin-bottom:14px">Errors that cost thousands — or kill the deal entirely.</div>
+          <ul class="tips-list">
+            <li>
+              <div class="tip-dot tip-dot-red"></div>
+              <span><strong>Waiving the home inspection.</strong> In competitive markets it's tempting, but one missed issue — mold, foundation crack, old wiring — can cost more than the house gained.</span>
+            </li>
+            <li>
+              <div class="tip-dot tip-dot-red"></div>
+              <span><strong>Buying at your pre-approval ceiling.</strong> Pre-approval is a maximum, not a recommendation. Leaving 10–15% below max gives you far more financial stability.</span>
+            </li>
+            <li>
+              <div class="tip-dot tip-dot-red"></div>
+              <span><strong>Making large purchases before closing.</strong> A new car, furniture financing, or opening a credit card between offer and closing can tank your DTI and kill loan approval.</span>
+            </li>
+            <li>
+              <div class="tip-dot tip-dot-red"></div>
+              <span><strong>Underestimating maintenance costs.</strong> Many first-time buyers are shocked by the real cost of upkeep. Budget at least 1% of home value annually — more for older homes.</span>
+            </li>
+            <li>
+              <div class="tip-dot tip-dot-red"></div>
+              <span><strong>Using only one lender.</strong> Your bank may not offer the best rates. Independent mortgage brokers and online lenders are worth a comparison, especially on larger loans.</span>
+            </li>
+            <li>
+              <div class="tip-dot tip-dot-red"></div>
+              <span><strong>Letting emotion override budget.</strong> Falling in love with a home 20% above budget leads to buyer's remorse, financial stress, or getting outbid and walking away empty-handed.</span>
+            </li>
+            <li>
+              <div class="tip-dot tip-dot-red"></div>
+              <span><strong>Ignoring HOA rules and finances.</strong> Restrictive bylaws, underfunded reserves, and pending special assessments can create significant costs and lifestyle constraints.</span>
+            </li>
+            <li>
+              <div class="tip-dot tip-dot-red"></div>
+              <span><strong>Moving cash around before applying.</strong> Large unexplained deposits can trigger underwriting scrutiny. Keep your finances stable and document any large transfers.</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Row 4: Resources -->
+      <div class="col-12">
+        <div class="card">
+          <div class="card-title">Useful Resources</div>
+          <div class="card-sub" style="margin-bottom:16px">Trusted government and non-profit sources for home buying education, tools, and assistance programs.</div>
+          <div class="resource-grid">
+            <div class="resource-card">
+              <a href="https://www.consumerfinance.gov/owning-a-home/" target="_blank" rel="noopener noreferrer">
+                <div class="resource-name">CFPB — Owning a Home</div>
+                <div class="resource-desc">The Consumer Financial Protection Bureau's comprehensive guide covers the mortgage process, loan types, rate comparison, and a loan estimate explainer. Free and unbiased.</div>
+                <div class="resource-tag">consumerfinance.gov</div>
+              </a>
+            </div>
+            <div class="resource-card">
+              <a href="https://www.hud.gov/topics/buying_a_home" target="_blank" rel="noopener noreferrer">
+                <div class="resource-name">HUD — Buying a Home</div>
+                <div class="resource-desc">The U.S. Department of Housing and Urban Development provides information on FHA loans, approved housing counselors, and first-time buyer assistance programs by state.</div>
+                <div class="resource-tag">hud.gov</div>
+              </a>
+            </div>
+            <div class="resource-card">
+              <a href="https://homeview.fanniemae.com" target="_blank" rel="noopener noreferrer">
+                <div class="resource-name">Fannie Mae — HomeView</div>
+                <div class="resource-desc">A free online homeownership education course accepted by most lenders. Completing it may qualify first-time buyers for reduced PMI rates or down payment assistance programs.</div>
+                <div class="resource-tag">fanniemae.com</div>
+              </a>
+            </div>
+            <div class="resource-card">
+              <a href="https://myhome.freddiemac.com/buying" target="_blank" rel="noopener noreferrer">
+                <div class="resource-name">Freddie Mac — My Home</div>
+                <div class="resource-desc">Freddie Mac's buyer education hub covers affordability basics, the buying process step by step, and credit-building resources — particularly useful for first-generation buyers.</div>
+                <div class="resource-tag">freddiemac.com</div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 5: Use Our Calculators -->
+      <div class="col-12">
+        <div class="card">
+          <div class="card-title">Use Our Calculators</div>
+          <div class="card-sub" style="margin-bottom:16px">Put the numbers from this guide to work with our interactive tools.</div>
+          <div class="cta-grid">
+            <a href="affordability.html" class="cta-card">
+              <div class="cta-card-title">Affordability Calculator</div>
+              <div class="cta-card-desc">Find your max home price based on income, debts, and DTI thresholds. Three scenarios: conservative, moderate, and aggressive.</div>
+            </a>
+            <a href="mortgage.html" class="cta-card">
+              <div class="cta-card-title">Mortgage Calculator</div>
+              <div class="cta-card-desc">See your full monthly payment, total interest cost, and amortization schedule year by year. Model extra payments to pay off sooner.</div>
+            </a>
+            <a href="index.html" class="cta-card">
+              <div class="cta-card-title">Break-Even Calculator</div>
+              <div class="cta-card-desc">The core question: how long do you need to stay before buying beats renting? Models appreciation, rent savings, and opportunity cost.</div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<footer class="site-footer">
+  Planning tools only — not financial, tax, or legal advice. Consult a licensed professional before making real estate decisions.<br>
+  <a href="index.html">Break-Even</a> · <a href="mortgage.html">Mortgage</a> · <a href="affordability.html">Affordability</a> · <a href="guide.html">Buying Guide</a>
+</footer>
+
+<script>
+(function(){
+  var c = document.getElementById('grain-canvas');
+  var ctx = c.getContext('2d');
+  function resize(){ c.width = window.innerWidth; c.height = window.innerHeight; }
+  function draw(){
+    var w=c.width, h=c.height, img=ctx.createImageData(w,h), d=img.data;
+    for(var i=0;i<d.length;i+=4){ var v=Math.random()*255|0; d[i]=d[i+1]=d[i+2]=v; d[i+3]=255; }
+    ctx.putImageData(img,0,0);
+  }
+  resize(); draw();
+  window.addEventListener('resize', function(){ resize(); draw(); });
+})();
+</script>
+
+<script>
+(function(){
+  var p = location.pathname.split('/').pop() || 'index.html';
+  document.querySelectorAll('.nav-link').forEach(function(a){
+    if(a.getAttribute('href') === p) a.classList.add('active');
+  });
+})();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWbSxccPQtF3EpF3fnJHog6LaEVF6d1uPVst4IipKGbAIZ7eP" crossorigin="anonymous"></script>
+</body>
+</html>
