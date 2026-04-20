@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home Break-Even Calculator v2</title>
+  <title>Home Break-Even Calculator</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500&family=DM+Sans:ital,wght@0,400;0,500;0,600&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700&family=Space+Grotesk:ital,wght@0,400;0,500;0,600;0,700&display=swap" rel="stylesheet">
@@ -98,7 +98,7 @@
       </details>
 
       <div class="toolbar">
-        <button id="calcBtn" class="btn-primary" type="button">? Recalculate</button>
+        <button id="calcBtn" class="btn-primary" type="button">↻ Recalculate</button>
         <button id="resetBtn" class="btn-secondary" type="button">Reset defaults</button>
       </div>
 
@@ -398,15 +398,13 @@ window.addEventListener('message', function(e) {
   }
   function resetDefaults() {
     var defaults = {
-      purchasePrice:120000, downPayment:120000, interestRate:6.5,
+      purchasePrice:600000, downPayment:120000, interestRate:6.5,
       loanTermYears:30, initialClosingCosts:15000, annualAppreciation:3,
       sellingCostPercent:7, annualPropertyTax:12000, annualInsurance:2500,
       annualMaintenance:6000, monthlyHOA:0, maxYears:15,
       monthlyRentSaved:2500, annualRentGrowth:3,
       opportunityCostRate:6, annualTaxBenefit:0
     };
-    // correct purchase price
-    defaults.purchasePrice = 600000;
     Object.keys(defaults).forEach(function(k) {
       document.getElementById(k).value = defaults[k];
     });
