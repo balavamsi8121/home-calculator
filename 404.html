@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Page Not Found — HomeCalc</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500&family=DM+Sans:ital,wght@0,400;0,500;0,600&family=Rubik:ital,wght@0,300;0,400;0,500;0,600;0,700&family=Space+Grotesk:ital,wght@0,400;0,500;0,600;0,700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUarbnLuthimuoAAw7n6tqPbf5LD8FSkaGFqbnFvgvzStLJ7i5W" crossorigin="anonymous">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .error-page {
+      min-height: calc(100vh - 64px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 3rem 1.5rem;
+    }
+    .error-code {
+      font-family: 'DM Mono', monospace;
+      font-size: clamp(5rem, 15vw, 10rem);
+      font-weight: 500;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--accent, #6c63ff), var(--accent2, #a78bfa));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+    .error-title {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: clamp(1.25rem, 3vw, 1.75rem);
+      font-weight: 600;
+      margin-bottom: 0.75rem;
+    }
+    .error-desc {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 1rem;
+      opacity: 0.65;
+      max-width: 420px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.6;
+    }
+    .error-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+    }
+    .error-btn {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 0.6rem 1.4rem;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: opacity 0.15s;
+    }
+    .error-btn:hover { opacity: 0.8; }
+    .error-btn-primary {
+      background: var(--accent, #6c63ff);
+      color: #fff;
+    }
+    .error-btn-secondary {
+      border: 1px solid currentColor;
+      opacity: 0.7;
+    }
+    .error-btn-secondary:hover { opacity: 1; }
+  </style>
+</head>
+<body class="light-theme">
+
+<canvas id="grain-canvas"></canvas>
+<nav class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-brand">Home<span>Calc</span></a>
+    <div class="nav-links">
+      <a href="index.html" class="nav-link">Break-Even</a>
+      <a href="mortgage.html" class="nav-link">Mortgage</a>
+      <a href="affordability.html" class="nav-link">Affordability</a>
+      <a href="guide.html" class="nav-link">Buying Guide</a>
+    </div>
+  </div>
+</nav>
+
+<div class="error-page">
+  <div>
+    <div class="error-code">404</div>
+    <h1 class="error-title">Page not found</h1>
+    <p class="error-desc">
+      The page you're looking for doesn't exist on this site.
+      It may have been moved, deleted, or the URL might be mistyped.
+    </p>
+    <div class="error-links">
+      <a href="index.html" class="error-btn error-btn-primary">Go to Calculator</a>
+      <a href="mortgage.html" class="error-btn error-btn-secondary">Mortgage</a>
+      <a href="affordability.html" class="error-btn error-btn-secondary">Affordability</a>
+      <a href="guide.html" class="error-btn error-btn-secondary">Buying Guide</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // grain canvas (matches site behaviour)
+  (function () {
+    var canvas = document.getElementById('grain-canvas');
+    if (!canvas) return;
+    var ctx = canvas.getContext('2d');
+    function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    resize();
+    window.addEventListener('resize', resize);
+    function draw() {
+      var w = canvas.width, h = canvas.height;
+      var img = ctx.createImageData(w, h);
+      for (var i = 0; i < img.data.length; i += 4) {
+        var v = Math.random() * 255 | 0;
+        img.data[i] = img.data[i+1] = img.data[i+2] = v;
+        img.data[i+3] = 18;
+      }
+      ctx.putImageData(img, 0, 0);
+    }
+    draw();
+    setInterval(draw, 80);
+  })();
+</script>
+</body>
+</html>
