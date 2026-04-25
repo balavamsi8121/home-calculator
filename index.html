@@ -94,7 +94,7 @@
         <div class="field"><label>Insurance ($/yr)</label><input id="annualInsurance" type="number" placeholder="2500"><div class="field-help">Your yearly homeowners insurance cost.</div></div>
         <div class="field"><label>Maintenance ($/yr)</label><input id="annualMaintenance" type="number" placeholder="6000"><div class="field-help">Repairs and upkeep. For many first-time buyers, this is easy to underestimate.</div></div>
         <div class="field"><label>HOA ($/mo)</label><input id="monthlyHOA" type="number" placeholder="0"><div class="field-help">Monthly HOA dues, if the neighborhood or community has them.</div></div>
-        <div class="field"><label>PMI Rate (%/yr)</label><input id="annualPMIRate" type="number" step="0.01" placeholder="0.8"><div class="field-help" id="pmiHint">Applies when down payment is less than 20%. Auto-drops once you reach 20% equity.</div></div>
+        <div class="field"><label>PMI ($/mo)</label><input id="monthlyPMI" type="number" step="1" placeholder="150"><div class="field-help" id="pmiHint">Monthly PMI cost in dollars. Applies when down payment is less than 20%. Auto-drops once you reach 20% equity.</div></div>
         <div class="field"><label>Years to Display</label><input id="maxYears" type="number" placeholder="15"><div class="field-help">How far out you want the yearly comparison table to go.</div></div>
       </div>
 
@@ -197,7 +197,7 @@
                 <th>Loan Balance<i class="info" title="Remaining mortgage principal at time of sale (standard amortization).">i</i></th>
                 <th class="col-group-cost">Selling Costs<i class="info" title="Sale Price � Selling Cost %">i</i></th>
                 <th class="col-group-cost">Interest Paid<i class="info" title="[v2] Cumulative interest only � principal excluded (already in Cash Back).">i</i></th>
-                <th class="col-group-cost">Taxes + Ins. + Maint. + HOA + PMI<i class="info" title="(Tax + Insurance + Maintenance)/12 * months + HOA * months + PMI (while LTV > 80%)">i</i></th>
+                <th class="col-group-cost">Taxes + Ins. + Maint. + HOA + PMI<i class="info" title="(Tax + Insurance + Maintenance)/12 * months + HOA * months + PMI $/mo * months (while LTV > 80%)">i</i></th>
                 <th class="col-group-gain">Cash Back<i class="info" title="Sale Price - Selling Costs - Loan Balance">i</i></th>
                 <th class="col-group-adv">Rent Saved<i class="info" title="Cumulative rent avoided with annual rent growth.">i</i></th>
                 <th class="col-group-cost">Opp. Cost<i class="info" title="Upfront Cash � ((1 + rate/12)^months - 1). Default 6% (S&P avg).">i</i></th>
@@ -310,11 +310,11 @@ window.addEventListener('message', function(e) {
     }
     return loanTermYears * 12 + 1;
   }
-  function cumulativePMI(months, loanAmount, annualRate, loanTermYears, purchasePrice, annualPMIRate) {
-    if (loanAmount <= 0.80 * purchasePrice || annualPMIRate <= 0) return 0;
+  function cumulativePMI(months, loanAmount, annualRate, loanTermYears, purchasePrice, monthlyPMI) {
+    if (loanAmount <= 0.80 * purchasePrice || monthlyPMI <= 0) return 0;
     var cancelM = pmiCancelMonth(loanAmount, annualRate, loanTermYears, purchasePrice);
     var pmiMonths = Math.min(months, Math.max(0, cancelM - 1));
-    return (annualPMIRate / 100 / 12) * loanAmount * pmiMonths;
+    return monthlyPMI * pmiMonths;
   }
   function compute(months) {
     var purchasePrice       = num("purchasePrice");
@@ -328,7 +328,7 @@ window.addEventListener('message', function(e) {
     var annualInsurance     = num("annualInsurance");
     var annualMaintenance   = num("annualMaintenance");
     var monthlyHOA          = num("monthlyHOA");
-    var annualPMIRate       = num("annualPMIRate");
+    var monthlyPMI          = num("monthlyPMI");
     var monthlyRentSaved    = num("monthlyRentSaved");
     var annualRentGrowth    = num("annualRentGrowth");
     var opportunityCostRate = num("opportunityCostRate");
@@ -340,7 +340,7 @@ window.addEventListener('message', function(e) {
     var sellingCosts = salePrice * (sellingCostPercent/100);
     var cashBack     = salePrice - sellingCosts - remaining;
     var interestPaid = cumulativeInterestPaid(months, loanAmount, interestRate, loanTermYears);
-    var pmiPaid      = cumulativePMI(months, loanAmount, interestRate, loanTermYears, purchasePrice, annualPMIRate);
+    var pmiPaid      = cumulativePMI(months, loanAmount, interestRate, loanTermYears, purchasePrice, monthlyPMI);
     var otherCosts   = ((annualPropertyTax + annualInsurance + annualMaintenance)/12) * months + (monthlyHOA * months) + pmiPaid;
     var basicNet     = cashBack - downPayment - initialClosingCosts - interestPaid - otherCosts;
     var rentSaved    = cumulativeRentSaved(months, monthlyRentSaved, annualRentGrowth);
@@ -462,7 +462,7 @@ window.addEventListener('message', function(e) {
     var fields = ['purchasePrice','downPayment','interestRate','loanTermYears',
       'initialClosingCosts','annualAppreciation','sellingCostPercent',
       'annualPropertyTax','annualInsurance','annualMaintenance','monthlyHOA',
-      'annualPMIRate','maxYears','monthlyRentSaved','annualRentGrowth','opportunityCostRate','annualTaxBenefit'];
+      'monthlyPMI','maxYears','monthlyRentSaved','annualRentGrowth','opportunityCostRate','annualTaxBenefit'];
     fields.forEach(function(k) { document.getElementById(k).value = ''; });
     showEmptyState();
   }
