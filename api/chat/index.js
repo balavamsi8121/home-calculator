@@ -1,6 +1,13 @@
 const Anthropic = require("@anthropic-ai/sdk");
+const fs = require("fs");
+const path = require("path");
 
 const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
+
+const siteContext = fs.readFileSync(
+  path.join(__dirname, "../context/site-context.md"),
+  "utf-8"
+);
 
 module.exports = async function (context, req) {
   if (!req.body || !req.body.message) {
@@ -18,7 +25,7 @@ module.exports = async function (context, req) {
   const loanAmount = (pp > 0 && dp >= 0) ? (pp - dp).toLocaleString() : "not set";
 
   const calcContext = `
-INPUTS the user has entered:
+INPUTS the user has entered in the Break-Even Calculator:
 - Purchase Price: $${cv.purchasePrice || "not set"}
 - Down Payment: $${cv.downPayment || "not set"}
 - Interest Rate: ${cv.interestRate || "not set"}%
@@ -37,11 +44,11 @@ INPUTS the user has entered:
 - Annual Tax Benefit: $${cv.annualTaxBenefit || "not set"}
 - Years to Display: ${cv.maxYears || "not set"}
 
-CALCULATED RESULTS (derived automatically — the user does not enter these):
+CALCULATED RESULTS (derived automatically):
 - Loan Amount (Purchase Price − Down Payment): $${loanAmount}
 - Monthly P&I Payment: $${computed.monthlyPayment || "not calculated"}
-- Break-Even Year (Basic/house-only): ${computed.breakEvenBasic || "not calculated"}
-- Break-Even Year (Advanced/rent-vs-buy): ${computed.breakEvenAdvanced || "not calculated"}
+- Break-Even Year (Basic): ${computed.breakEvenBasic || "not calculated"}
+- Break-Even Year (Advanced): ${computed.breakEvenAdvanced || "not calculated"}
 - 5-Year Basic Net: $${computed.fiveYearBasicNet || "not calculated"}
 - 5-Year Advanced Net: $${computed.fiveYearAdvancedNet || "not calculated"}
 `.trim();
@@ -50,39 +57,26 @@ CALCULATED RESULTS (derived automatically — the user does not enter these):
     const response = await client.messages.create({
       model: "claude-haiku-4-5-20251001",
       max_tokens: 512,
-      system: `You are a friendly home-buying assistant embedded in an interactive break-even calculator called "Is This House Worth It?".
+      system: [
+        {
+          type: "text",
+          text: `You are a friendly home-buying assistant embedded in HomeCalc (isthishouseworthit.space), a free suite of tools for first-time home buyers.
 
-WHAT THE CALCULATOR DOES:
-It helps users decide whether buying a home is financially worth it by comparing the true cost of ownership against renting. It shows year-by-year results up to 30 years.
+COMPLETE SITE KNOWLEDGE — use this to answer any question about the site, its tools, fields, calculations, and home-buying concepts:
 
-TABLE COLUMNS (shown per year the user would own before selling):
-- Sale Price: Purchase price compounded annually by appreciation rate
-- Loan Balance: Remaining mortgage principal (standard amortization)
-- Selling Costs: Sale price × selling cost % (agent fees, transfer taxes, etc.)
-- Interest Paid: Cumulative mortgage interest only — principal is excluded because it comes back as equity in Cash Back
-- Taxes + Ins. + Maint. + HOA + PMI: All recurring ownership costs combined
-- Cash Back: Sale price − selling costs − remaining loan balance (what you'd walk away with)
-- Rent Saved: Cumulative rent avoided, with annual rent growth compounding each year
-- Opp. Cost: What the down payment + closing costs could have earned if invested instead (default 6% = long-run S&P average)
-- Tax Benefit: User-estimated annual mortgage interest deduction value, spread monthly
-- Basic Net: Cash Back − Down Payment − Closing Costs − Interest − Other Costs. Pure house-only profit/loss. Positive = buying was worth it ignoring rent.
-- Advanced Net: Basic Net + Rent Saved + Tax Benefit − Opportunity Cost. The full rent-vs-buy comparison. Positive = buying beat renting.
-
-KEY METRICS:
-- Break-Even (Basic): First year Basic Net turns positive (house economics alone)
-- Break-Even (Advanced): First year Advanced Net turns positive (full rent-vs-buy)
-- 5-Year Net: Advanced Net at exactly 5 years — a quick pulse check
-
-PMI: Private Mortgage Insurance is required when down payment < 20% of purchase price (LTV > 80%). It's entered as a fixed monthly dollar amount and automatically cancels when the loan balance drops to 80% of the original purchase price.
-
-OPPORTUNITY COST: This represents what the upfront cash (down payment + closing costs) could have earned if invested in index funds instead of being tied up in the house. It is subtracted in Advanced Net to give a true comparison.
+${siteContext}
 
 RULES — follow these strictly:
-1. Only answer questions about home buying, mortgages, renting vs. buying, real estate, and related personal finance. If asked about anything else, say: "I'm focused on home-buying questions — ask me anything about your calculator results or the numbers!"
+1. Only answer questions about home buying, mortgages, renting vs. buying, real estate, and related personal finance. If asked about anything unrelated, say: "I'm focused on home-buying questions — ask me anything about your calculator results or the numbers!"
 2. Reference the user's actual numbers from the calculator context when relevant.
 3. Never give tax or legal advice. For those topics, say: "For tax/legal questions, please consult a licensed professional."
-4. Keep answers under 200 words. Be direct and practical.
-5. If key inputs are "not set", note that the user should fill in those values to get accurate results.`,
+4. Keep answers under 250 words. Be direct and practical.
+5. If key inputs are "not set", note that the user should fill in those values to get accurate results.
+6. When a user asks about a field or concept, give them a clear plain-English explanation using the site knowledge above.
+7. When relevant, mention other tools on the site (Mortgage Calculator, Affordability Calculator, Buying Guide) and where to find them.`,
+          cache_control: { type: "ephemeral" }
+        }
+      ],
       messages: [
         {
           role: "user",
