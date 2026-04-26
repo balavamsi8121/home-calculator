@@ -62,6 +62,23 @@
 
 <div class="wrap">
   <div class="container-lg">
+    <!-- Intro Banner -->
+    <div id="intro-banner" class="col-12">
+      <button id="intro-banner-close" title="Dismiss">✕</button>
+      <h3>Welcome to the Home Break-Even Calculator</h3>
+      <p class="intro-tagline">Never owned a home? That's exactly who this is built for.</p>
+      <p>This tool answers one key question: <strong>If I buy this home today, how long do I need to stay before owning makes more financial sense than renting?</strong></p>
+      <ul>
+        <li><strong>Enter your numbers</strong> on the left — home price, down payment, interest rate, and ongoing costs.</li>
+        <li><strong>Basic Break-Even</strong> shows when the house itself starts paying off (what you put in vs. what you'd walk away with).</li>
+        <li><strong>Advanced Break-Even</strong> adds the full picture: rent you're no longer paying, and what your down payment could have earned if invested instead.</li>
+        <li>The <strong>year-by-year table</strong> below shows the math at every stage so nothing is hidden.</li>
+        <li>Use the <strong>💬 AI chat</strong> (bottom right) to ask questions about your specific numbers in plain English.</li>
+      </ul>
+      <p style="opacity:0.85; font-size:0.82rem;">Not sure about some values? The placeholders are reasonable starting estimates — adjust as you learn more.</p>
+      <button class="intro-dismiss-btn" id="intro-dismiss-btn">Got it, start calculating →</button>
+    </div>
+
     <div class="row g-3 g-md-4">
 
       <!-- -- LEFT: Inputs -- -->
@@ -94,7 +111,7 @@
         <div class="field"><label>Insurance ($/yr)</label><input id="annualInsurance" type="number" placeholder="2500"><div class="field-help">Your yearly homeowners insurance cost.</div></div>
         <div class="field"><label>Maintenance ($/yr)</label><input id="annualMaintenance" type="number" placeholder="6000"><div class="field-help">Repairs and upkeep. For many first-time buyers, this is easy to underestimate.</div></div>
         <div class="field"><label>HOA ($/mo)</label><input id="monthlyHOA" type="number" placeholder="0"><div class="field-help">Monthly HOA dues, if the neighborhood or community has them.</div></div>
-        <div class="field"><label>PMI ($/mo)</label><input id="monthlyPMI" type="number" step="1" placeholder="150"><div class="field-help" id="pmiHint">Monthly PMI cost in dollars. Applies when down payment is less than 20%. Auto-drops once you reach 20% equity.</div></div>
+        <div class="field"><label>PMI ($/mo)</label><input id="monthlyPMI" type="number" placeholder="200"><div class="field-help" id="pmiHint">Monthly PMI payment. Applies when down payment is less than 20%. Leave blank if you have 20%+ down.</div></div>
         <div class="field"><label>Years to Display</label><input id="maxYears" type="number" placeholder="15"><div class="field-help">How far out you want the yearly comparison table to go.</div></div>
       </div>
 
@@ -158,6 +175,31 @@
         </div>
       </div>
 
+      <!-- Break-Even Explainers -->
+      <div class="be-explain-row">
+        <div class="be-explain-card">
+          <div class="be-explain-title">📊 What is Basic Break-Even?</div>
+          <div class="be-explain-body">
+            <p>Think of this as the <strong>house-only scorecard</strong>. It answers: <em>"If I sell after N years, do I get more money back than I put in?"</em></p>
+            <p>It adds up everything you spent on the house — down payment, closing costs, all mortgage interest, property taxes, insurance, maintenance, HOA, and PMI — then compares that to what you'd pocket after selling.</p>
+            <p>When Basic Net turns <strong style="color:#16a34a">positive</strong>, you've recovered your costs from the home itself. This is your baseline — it doesn't care about rent or investing.</p>
+            <p style="opacity:0.75"><em>Example: If you put $120K in and after 10 years the math says +$15K, you've broken even and come out ahead on the house alone.</em></p>
+          </div>
+        </div>
+        <div class="be-explain-card">
+          <div class="be-explain-title">🏠 What is Advanced Break-Even?</div>
+          <div class="be-explain-body">
+            <p>This is the <strong>full rent-vs-buy comparison</strong>. It starts with Basic Net and adds two more factors:</p>
+            <ul>
+              <li><strong>Rent avoided:</strong> Every month you own, you're not paying rent. That's real money you keep. If your equivalent rent is $2,500/mo, that's $30K/year counted in your favor.</li>
+              <li><strong>Opportunity cost:</strong> Your down payment could have been invested (e.g., in index funds). This estimates what it would have grown to — that's a real tradeoff of buying.</li>
+            </ul>
+            <p>Advanced break-even is often <strong>earlier</strong> than basic when rent in your area is high, because you're "saving" that rent every single month.</p>
+            <p style="opacity:0.75"><em>New to this? Start by entering the rent you'd pay for a similar place in "Rent Avoided" under Advanced Settings.</em></p>
+          </div>
+        </div>
+      </div>
+
       <!-- Table -->
       <div class="card table-card">
         <div class="table-head">
@@ -197,7 +239,7 @@
                 <th>Loan Balance<i class="info" title="Remaining mortgage principal at time of sale (standard amortization).">i</i></th>
                 <th class="col-group-cost">Selling Costs<i class="info" title="Sale Price � Selling Cost %">i</i></th>
                 <th class="col-group-cost">Interest Paid<i class="info" title="[v2] Cumulative interest only � principal excluded (already in Cash Back).">i</i></th>
-                <th class="col-group-cost">Taxes + Ins. + Maint. + HOA + PMI<i class="info" title="(Tax + Insurance + Maintenance)/12 * months + HOA * months + PMI $/mo * months (while LTV > 80%)">i</i></th>
+                <th class="col-group-cost">Taxes + Ins. + Maint. + HOA + PMI<i class="info" title="(Tax + Insurance + Maintenance)/12 * months + HOA * months + Monthly PMI * months (while LTV > 80%)">i</i></th>
                 <th class="col-group-gain">Cash Back<i class="info" title="Sale Price - Selling Costs - Loan Balance">i</i></th>
                 <th class="col-group-adv">Rent Saved<i class="info" title="Cumulative rent avoided with annual rent growth.">i</i></th>
                 <th class="col-group-cost">Opp. Cost<i class="info" title="Upfront Cash � ((1 + rate/12)^months - 1). Default 6% (S&P avg).">i</i></th>
@@ -489,6 +531,57 @@ window.addEventListener('message', function(e) {
 
 <!-- AI Chat Widget -->
 <style>
+  /* Intro Banner */
+  #intro-banner {
+    background: linear-gradient(135deg, #6c63ff 0%, #4f46e5 100%);
+    color: #fff; border-radius: 16px; padding: 28px 28px 24px;
+    margin-bottom: 24px; position: relative;
+  }
+  #intro-banner h3 { font-size: 1.2rem; font-weight: 700; margin: 0 0 6px; }
+  #intro-banner .intro-tagline { font-size: 1rem; font-weight: 600; margin: 0 0 12px; opacity: 0.97; }
+  #intro-banner p, #intro-banner li { font-size: 0.875rem; opacity: 0.93; margin: 0 0 6px; }
+  #intro-banner ul { padding-left: 20px; margin: 8px 0 12px; }
+  #intro-banner li { margin-bottom: 4px; }
+  #intro-banner-close {
+    position: absolute; top: 14px; right: 16px;
+    background: rgba(255,255,255,0.18); border: none; color: #fff;
+    width: 28px; height: 28px; border-radius: 50%; cursor: pointer;
+    font-size: 14px; line-height: 1; display: flex; align-items: center; justify-content: center;
+  }
+  #intro-banner-close:hover { background: rgba(255,255,255,0.3); }
+  .intro-dismiss-btn {
+    background: rgba(255,255,255,0.92); color: #4f46e5; border: none;
+    padding: 9px 22px; border-radius: 8px; font-weight: 600;
+    font-size: 0.85rem; cursor: pointer; margin-top: 6px;
+  }
+  .intro-dismiss-btn:hover { background: #fff; }
+
+  /* Break-Even Explainer */
+  .be-explain-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    margin-bottom: 20px;
+  }
+  @media (max-width: 640px) { .be-explain-row { grid-template-columns: 1fr; } }
+  .be-explain-card {
+    background: var(--card-bg, #fff); border: 1px solid var(--border, #e5e7eb);
+    border-radius: 12px; padding: 18px 20px;
+  }
+  .be-explain-title {
+    font-weight: 700; font-size: 0.9rem; margin-bottom: 10px;
+    color: var(--text, #111);
+  }
+  .be-explain-body { font-size: 0.82rem; color: var(--text-muted, #555); line-height: 1.55; }
+  .be-explain-body p { margin: 0 0 8px; }
+  .be-explain-body ul { padding-left: 18px; margin: 6px 0 8px; }
+  .be-explain-body li { margin-bottom: 4px; }
+  .be-explain-body strong { color: var(--text, #111); }
+
+  /* Chat markdown */
+  .chat-msg.bot p { margin: 0 0 6px; }
+  .chat-msg.bot p:last-child { margin-bottom: 0; }
+  .chat-msg.bot ul, .chat-msg.bot ol { padding-left: 18px; margin: 4px 0 6px; }
+  .chat-msg.bot li { margin-bottom: 3px; }
+
   #chat-fab {
     position: fixed; bottom: 28px; right: 28px; z-index: 1000;
     width: 56px; height: 56px; border-radius: 50%; border: none;
@@ -567,6 +660,21 @@ window.addEventListener('message', function(e) {
   var input  = document.getElementById('chat-input');
   var send   = document.getElementById('chat-send');
 
+  // Intro banner: show once, hide on dismiss
+  (function() {
+    var banner = document.getElementById('intro-banner');
+    if (!banner) return;
+    if (localStorage.getItem('hc_intro_dismissed')) {
+      banner.style.display = 'none';
+    }
+    function dismiss() {
+      banner.style.display = 'none';
+      localStorage.setItem('hc_intro_dismissed', '1');
+    }
+    document.getElementById('intro-banner-close').addEventListener('click', dismiss);
+    document.getElementById('intro-dismiss-btn').addEventListener('click', dismiss);
+  })();
+
   fab.addEventListener('click', function () { panel.classList.toggle('open'); if (panel.classList.contains('open')) input.focus(); });
   close.addEventListener('click', function () { panel.classList.remove('open'); });
 
@@ -574,7 +682,7 @@ window.addEventListener('message', function(e) {
     var ids = ['purchasePrice','downPayment','interestRate','loanTermYears',
       'initialClosingCosts','annualAppreciation','sellingCostPercent',
       'annualPropertyTax','annualInsurance','annualMaintenance','monthlyHOA',
-      'annualPMIRate','maxYears','monthlyRentSaved','annualRentGrowth',
+      'monthlyPMI','maxYears','monthlyRentSaved','annualRentGrowth',
       'opportunityCostRate','annualTaxBenefit'];
     var vals = {};
     ids.forEach(function (id) {
@@ -584,10 +692,29 @@ window.addEventListener('message', function(e) {
     return vals;
   }
 
+  function renderMarkdown(text) {
+    // Escape HTML first for safety
+    var s = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    // Insert line breaks before numbered bold items: **1. **2. etc.
+    s = s.replace(/\s(\*\*\d+\.)/g, '<br><br>$1');
+    // Insert line break before conclusion patterns like **The reality:** **Summary:**
+    s = s.replace(/\s(\*\*[A-Z][^*\n]{1,30}:\*\*)/g, '<br><br>$1');
+    // Render **bold**
+    s = s.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    // Convert newlines
+    s = s.replace(/\n\n/g, '<br><br>');
+    s = s.replace(/\n/g, '<br>');
+    return s;
+  }
+
   function addMsg(text, role, typing) {
     var div = document.createElement('div');
     div.className = 'chat-msg ' + role + (typing ? ' typing' : '');
-    div.textContent = text;
+    if (role === 'bot' && !typing) {
+      div.innerHTML = renderMarkdown(text);
+    } else {
+      div.textContent = text;
+    }
     msgs.appendChild(div);
     msgs.scrollTop = msgs.scrollHeight;
     return div;

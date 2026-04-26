@@ -24,7 +24,7 @@ The user has entered the following values into a home break-even calculator:
 - Insurance: $${cv.annualInsurance || "not set"}/yr
 - Maintenance: $${cv.annualMaintenance || "not set"}/yr
 - HOA: $${cv.monthlyHOA || "not set"}/mo
-- PMI Rate: ${cv.annualPMIRate || "not set"}%/yr
+- PMI (monthly): $${cv.monthlyPMI || "not set"}/mo
 - Rent Avoided: $${cv.monthlyRentSaved || "not set"}/mo
 - Rent Growth: ${cv.annualRentGrowth || "not set"}%/yr
 - Opportunity Cost Rate: ${cv.opportunityCostRate || "not set"}%/yr
