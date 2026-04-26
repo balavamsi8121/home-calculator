@@ -16,12 +16,12 @@
 
 <nav class="site-nav">
   <div class="nav-inner">
-    <a href="index.html" class="nav-brand">Home<span>Calc</span></a>
+    <a href="/" class="nav-brand">Home<span>Calc</span></a>
     <div class="nav-links">
-      <a href="index.html" class="nav-link">Break-Even</a>
-      <a href="mortgage.html" class="nav-link">Mortgage</a>
-      <a href="affordability.html" class="nav-link">Affordability</a>
-      <a href="guide.html" class="nav-link">Buying Guide</a>
+      <a href="/" class="nav-link">Break-Even</a>
+      <a href="/mortgage" class="nav-link">Mortgage</a>
+      <a href="/affordability" class="nav-link">Affordability</a>
+      <a href="/guide" class="nav-link">Buying Guide</a>
     </div>
   </div>
 </nav>
@@ -352,15 +352,15 @@
           <div class="card-title">Use Our Calculators</div>
           <div class="card-sub" style="margin-bottom:16px">Put the numbers from this guide to work with our interactive tools.</div>
           <div class="cta-grid">
-            <a href="affordability.html" class="cta-card">
+            <a href="/affordability" class="cta-card">
               <div class="cta-card-title">Affordability Calculator</div>
               <div class="cta-card-desc">Find your max home price based on income, debts, and DTI thresholds. Three scenarios: conservative, moderate, and aggressive.</div>
             </a>
-            <a href="mortgage.html" class="cta-card">
+            <a href="/mortgage" class="cta-card">
               <div class="cta-card-title">Mortgage Calculator</div>
               <div class="cta-card-desc">See your full monthly payment, total interest cost, and amortization schedule year by year. Model extra payments to pay off sooner.</div>
             </a>
-            <a href="index.html" class="cta-card">
+            <a href="/" class="cta-card">
               <div class="cta-card-title">Break-Even Calculator</div>
               <div class="cta-card-desc">The core question: how long do you need to stay before buying beats renting? Models appreciation, rent savings, and opportunity cost.</div>
             </a>
@@ -374,7 +374,7 @@
 
 <footer class="site-footer">
   Planning tools only — not financial, tax, or legal advice. Consult a licensed professional before making real estate decisions.<br>
-  <a href="index.html">Break-Even</a> · <a href="mortgage.html">Mortgage</a> · <a href="affordability.html">Affordability</a> · <a href="guide.html">Buying Guide</a>
+  <a href="/">Break-Even</a> · <a href="/mortgage">Mortgage</a> · <a href="/affordability">Affordability</a> · <a href="/guide">Buying Guide</a>
 </footer>
 
 <script>
@@ -394,7 +394,7 @@
 
 <script>
 (function(){
-  var p = location.pathname.split('/').pop() || 'index.html';
+  var p = location.pathname.replace(/\/$/, '') || '/';
   document.querySelectorAll('.nav-link').forEach(function(a){
     if(a.getAttribute('href') === p) a.classList.add('active');
   });
