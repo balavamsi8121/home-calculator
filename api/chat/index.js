@@ -13,11 +13,14 @@ module.exports = async function (context, req) {
   const cv = calculatorValues || {};
   const computed = cv._computed || {};
 
+  const pp = parseFloat(cv.purchasePrice);
+  const dp = parseFloat(cv.downPayment);
+  const loanAmount = (pp > 0 && dp >= 0) ? (pp - dp).toLocaleString() : "not set";
+
   const calcContext = `
 INPUTS the user has entered:
 - Purchase Price: $${cv.purchasePrice || "not set"}
 - Down Payment: $${cv.downPayment || "not set"}
-- Loan Amount: $${computed.loanAmount || "not set"}
 - Interest Rate: ${cv.interestRate || "not set"}%
 - Loan Term: ${cv.loanTermYears || "not set"} years
 - Closing Costs: $${cv.initialClosingCosts || "not set"}
@@ -34,7 +37,8 @@ INPUTS the user has entered:
 - Annual Tax Benefit: $${cv.annualTaxBenefit || "not set"}
 - Years to Display: ${cv.maxYears || "not set"}
 
-CALCULATED RESULTS (computed from the inputs above):
+CALCULATED RESULTS (derived automatically — the user does not enter these):
+- Loan Amount (Purchase Price − Down Payment): $${loanAmount}
 - Monthly P&I Payment: $${computed.monthlyPayment || "not calculated"}
 - Break-Even Year (Basic/house-only): ${computed.breakEvenBasic || "not calculated"}
 - Break-Even Year (Advanced/rent-vs-buy): ${computed.breakEvenAdvanced || "not calculated"}

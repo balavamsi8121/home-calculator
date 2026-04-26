@@ -694,7 +694,6 @@ window.addEventListener('message', function(e) {
       var beBasicM = breakEvenMonth(false);
       var beAdvM = breakEvenMonth(true);
       vals._computed = {
-        loanAmount: (num('purchasePrice') - num('downPayment')).toFixed(0),
         monthlyPayment: fiveYr.monthlyPayment.toFixed(2),
         breakEvenBasic: beBasicM ? formatBreakEven(beBasicM) : '>30 yrs',
         breakEvenAdvanced: beAdvM ? formatBreakEven(beAdvM) : '>30 yrs',
