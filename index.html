@@ -689,6 +689,19 @@ window.addEventListener('message', function(e) {
       var el = document.getElementById(id);
       if (el && el.value) vals[id] = el.value;
     });
+    try {
+      var fiveYr = compute(60);
+      var beBasicM = breakEvenMonth(false);
+      var beAdvM = breakEvenMonth(true);
+      vals._computed = {
+        loanAmount: (num('purchasePrice') - num('downPayment')).toFixed(0),
+        monthlyPayment: fiveYr.monthlyPayment.toFixed(2),
+        breakEvenBasic: beBasicM ? formatBreakEven(beBasicM) : '>30 yrs',
+        breakEvenAdvanced: beAdvM ? formatBreakEven(beAdvM) : '>30 yrs',
+        fiveYearBasicNet: fiveYr.basicNet.toFixed(0),
+        fiveYearAdvancedNet: fiveYr.advancedNet.toFixed(0)
+      };
+    } catch(e) {}
     return vals;
   }
 
