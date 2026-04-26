@@ -1,4 +1,9 @@
 {
+  "routes": [
+    { "route": "/mortgage",      "rewrite": "/mortgage.html" },
+    { "route": "/affordability", "rewrite": "/affordability.html" },
+    { "route": "/guide",         "rewrite": "/guide.html" }
+  ],
   "responseOverrides": {
     "404": {
       "rewrite": "/404.html",
